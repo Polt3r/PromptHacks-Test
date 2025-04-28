@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receba seu E-book | PromptHacks</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #DDDDDD;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #00FFFF;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    p {
+      color: #AAAAAA;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    form {
+      background-color: #1E1E1E;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00FFFF;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    input[type="email"] {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      background-color: #0D0D0D;
+      color: #DDDDDD;
+    }
+    button {
+      background-color: #00FFFF;
+      color: #121212;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #22E0FF;
+    }
+    #msg {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #00FFFF;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Ganhe seu E-book!</h1>
+  <p>Deixe seu e-mail abaixo e receba 20 prompts prontos para usar agora mesmo.</p>
+
+  <form id="emailForm">
+    <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+    <br>
+    <button type="submit">Receber o E-book</button>
+    <p id="msg"></p>
+  </form>
+
+  <script>
+    const form = document.getElementById("emailForm");
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      console.log("Enviando e-mail:", email); // <-- Veja no console
+  
+      const formData = new FormData();
+      formData.append('email', email);
+  
+      fetch("https://script.google.com/macros/s/AKfycbyglUph4HmWEmgnU5IjgOVXQjqG6gRwfu9IsDX2CxMoxf3vI495whJCTIDkPDse0ZiM/exec", {
+        method: "POST",
+        body: formData,
+        mode: "no-cors",
+      })
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("msg").innerText = "E-mail enviado! Confira sua caixa de entrada.";
+        console.log("Resposta do servidor:", data);
+        form.reset();
+      })
+      .catch(error => {
+        document.getElementById("msg").innerText = "Erro ao enviar. Tente novamente.";
+        console.error(error);
+      });
+    });
+  </script>
+  
+  
+
+</body>
+</html>
